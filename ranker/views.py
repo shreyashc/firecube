@@ -206,10 +206,12 @@ def kannadatopfifty(request):
 		i = i + 1
 
 		final_song_artist_list.append(list_for_each_song)
+		date=datetime.date.today()
 
 	context={
 		'song_list':final_song_artist_list,
-		'list_name':"Kannada Weekly Top 50 Songs"
+		'list_name':"Kannada Weekly Top 50 Songs",
+		'date':date
 	}
 
 	return render(request, 'topfifty.html',context)
