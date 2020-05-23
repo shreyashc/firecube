@@ -1,0 +1,1 @@
+web: gunicorn firecube.wsgi --log-file -

@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>About</title>
+
+	<!-- fonts-awesome icons cdn -->
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+	<!-- view port scale -->
+	<meta name="viewport" content="width=device-width,initial-scale1.0">
+
+	<!-- google font roboto -->
+	<link rel="stylesheet"
+  	href="https://fonts.googleapis.com/css?family=Roboto">
+	
+	<!-- fonts-awesome icons cdn -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	
+	<!-- local css -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/stylesforindex.css' %}">
+</head>
+<body >
+<header>
+		<div class="logo">
+			FiRE <i class="fas fa-cube"></i>
+		</div>
+		<nav >
+			<ul>
+				<li><a href="{% url 'home' %}">Home</a></li>
+				<li><a href="{% url 'youtube' %}">YouTube Downloder</a></li>
+				<li><a href="{% url 'about' %}">About</a></li>
+			</ul>
+		</nav>
+		<div class="menu-toggle">
+			<i class="fas fa-bars"></i>
+		</div>
+	</header>
+<div id="saperator">.</div>
+
+<h1 id="hea">FIRE CUBE</h1>
+
+<p id="ab">
+	A simple web application which provides real time data regarding 
+	Trending movies and web series (India),songs and more. 
+	Youtube Downloader offers a simple,fast and secure way to download 
+	YouTube Vidoes for free. <br>
+	We want you to known that we do not have any copyrighted or illegal 
+	content on FireCube.The music search information we host does not have
+	files that can be copyrighted.However we can still remove urls,search results 
+	play options from our site. <br>
+</p>
+
+<p id="contact"><i class="far fa-envelope"></i>shreyashc018@gmail.com</p>
+
+</body>
+
+				<!-- menu bar onclick  -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.menu-toggle').click(function(){
+				$('nav').toggleClass('active')
+			})
+		})
+	</script>
+</html>

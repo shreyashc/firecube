@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>YouTube Downloader</title>
+
+	<meta name="viewport" content="width=device-width,initial-scale1.0">
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<!-- local styles -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/stylesfordownload.css' %}">
+
+	<link rel="icon" href="{% static 'icons/youtube.ico' %}" type="image/gif" sizes="16x16">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+</head>
+<body id="ytbody">
+<header>
+		<div class="logo">
+			FiRE <i class="fas fa-cube"></i>
+		</div>
+		<nav >
+			<ul>
+				<li><a href="{% url 'home' %}">Home</a></li>
+				<li><a href="{% url 'youtube' %}">YouTube Downloder</a></li>
+				<li><a href="{% url 'about' %}">About</a></li>
+			</ul>
+		</nav>
+		<div class="menu-toggle">
+			<i class="fas fa-bars"></i>
+		</div>
+	</header>
+	<div id="saperator">.</div>
+	<div class="heading">
+	<h1 id="yt">Youtube Downloader</h1>
+	</div>
+
+	<form action="ytdownloader" id="frm"> 
+        <input id="x" type="text" placeholder="Enter Video URL(link)" name='video_url'> 
+
+        <div class="sub">
+            <a id="txt" class="cross_line" href="javascript:{}" onclick="document.getElementById('frm').submit(); return false;">
+                GO
+            </a>
+        </div>
+    </form>
+
+    {% if error%}
+    <div id="er">
+    <h5>{{ error }}</h5>
+    </div>
+    {% endif %}
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.menu-toggle').click(function(){
+				$('nav').toggleClass('active')
+			})
+		})
+	</script>
+</html>

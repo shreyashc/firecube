@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<meta name="viewport" content="width=device-width,initial-scale1.0">
+<head>
+
+	<title>Fire Cube</title>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<!-- google fonts -->
+	<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Roboto">
+	
+	<!-- fonts-awesome icons cdn -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	
+	<!-- local css -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/stylesforindex.css' %}">
+	<!-- title logo -->
+	<link rel="icon" href="{% static 'icons/cube.ico' %}" type="image/gif" sizes="16x16">
+</head>
+	<header>
+		<div class="logo">
+			FiRE <i class="fas fa-cube"></i>
+		</div>
+		<nav >
+			<ul>
+				<li><a href="{% url 'home' %}">Home</a></li>
+				<li><a href="{% url 'youtube' %}">YouTube Downloder</a></li>
+				<li><a href="{% url 'about' %}">About</a></li>
+			</ul>
+		</nav>
+		<div class="menu-toggle">
+			<i class="fas fa-bars"></i>
+		</div>
+	</header>
+
+	
+<body>
+	<div class="list">
+		<ul id="ullist">
+			<li><a href="{% url 'movies' %}">Trending Movies/Web Series(India)</a></li>
+
+			<li><a href="{% url 'kannadatopfifty' %}">Kannada Weekly Top 50 Songs</a></li>
+
+			<li><a href="{% url 'hinditopfifty' %}">Hindi Weekly Top 50 Songs</a></li>
+			
+			<li><a href="{% url 'hothundred' %}">billboard Hot 100 songs</a></li>
+			
+			<li><a href="{% url 'topten' %}">billboard Top 10 Songs(billboard200)</a></li>
+			<li><a href="{% url 'toptwohundred' %}">billboard Top 200 Songs(billboard200)</a></li>
+
+
+			
+
+		</ul>
+	</div>
+	
+		
+	</div>
+<div class="zz">
+	<div id="background_animation">
+
+  		<span></span>
+  		<span></span>
+  		<span></span>
+  		<span></span>
+  		<span></span>
+
+		<div id="rouge"></div>
+		<div id="bleu "></div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.menu-toggle').click(function(){
+				$('nav').toggleClass('active')
+			})
+		})
+	</script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+
+</html>
