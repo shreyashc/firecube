@@ -318,12 +318,12 @@ def download(request):
 		if video_limit > 3:
 			break
 		video_limit = video_limit + 1
-	    video_streams.append({
-	        'resolution': s.resolution,
-	        'extension': s.extension,
-	        'file_size': filesizeformat(s.get_filesize()),
-	        'video_url': s.url + "&title=" + video.title
-	    })
+		video_streams.append({
+		    'resolution': s.resolution,
+		    'extension': s.extension,
+		    'file_size': filesizeformat(s.get_filesize()),
+		    'video_url': s.url + "&title=" + video.title
+		})
 
     
 	audio_streams = []
@@ -332,12 +332,12 @@ def download(request):
 		if audio_limit > 3:
 			break
 		audio_limit = audio_limit + 1
-	    audio_streams.append({
-	        'resolution': s.resolution,
-	        'extension': s.extension,
-	        'file_size': filesizeformat(s.get_filesize()),
-	        'video_url': s.url + "&title=" + video.title
-	    })
+		audio_streams.append({
+		    'resolution': s.resolution,
+		    'extension': s.extension,
+		    'file_size': filesizeformat(s.get_filesize()),
+		    'video_url': s.url + "&title=" + video.title
+		})
 
 	context = {
             'streams': video_audio_streams,
