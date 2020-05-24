@@ -286,6 +286,7 @@ def download(request):
 	for url in soup.find_all('a'):
 	    if url.get('href')[:7] == '/watch?':
 	    	related_url_list.append(url.get('href'))
+	    	break
 
 	try:
 		video_url = base_url_yt+related_url_list[0]
@@ -312,7 +313,11 @@ def download(request):
 
 	stream_video = video.videostreams
 	video_streams = []
+	video_limit=0
 	for s in stream_video:
+		if video_limit > 3:
+			break
+		video_limit = video_limit + 1
 	    video_streams.append({
 	        'resolution': s.resolution,
 	        'extension': s.extension,
@@ -322,7 +327,11 @@ def download(request):
 
     
 	audio_streams = []
+	audio_limit=0
 	for s in stream_audio:
+		if audio_limit > 3:
+			break
+		audio_limit = audio_limit + 1
 	    audio_streams.append({
 	        'resolution': s.resolution,
 	        'extension': s.extension,
