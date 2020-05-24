@@ -311,19 +311,19 @@ def download(request):
 	        'video_url': s.url + "&title=" + video.title
 	    })
 
-	stream_video = video.videostreams
-	video_streams = []
-	video_limit=0
-	for s in stream_video:
-		if video_limit > 3:
-			break
-		video_limit = video_limit + 1
-		video_streams.append({
-		    'resolution': s.resolution,
-		    'extension': s.extension,
-		    'file_size': filesizeformat(s.get_filesize()),
-		    'video_url': s.url + "&title=" + video.title
-		})
+	# stream_video = video.videostreams
+	# video_streams = []
+	# video_limit=0
+	# for s in stream_video:
+	# 	if video_limit > 3:
+	# 		break
+	# 	video_limit = video_limit + 1
+	# 	video_streams.append({
+	# 	    'resolution': s.resolution,
+	# 	    'extension': s.extension,
+	# 	    'file_size': filesizeformat(s.get_filesize()),
+	# 	    'video_url': s.url + "&title=" + video.title
+	# 	})
 
     
 	audio_streams = []
@@ -342,7 +342,7 @@ def download(request):
 	context = {
             'streams': video_audio_streams,
             'audio_streams':audio_streams,
-            'video_streams':video_streams,
+            # 'video_streams':video_streams,
             'title': video.title,                       
             'thumb': video.bigthumbhd,                         
         }
