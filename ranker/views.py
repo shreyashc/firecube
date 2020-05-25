@@ -291,7 +291,7 @@ def download(request):
 	try:
 		video_url = base_url_yt+related_url_list[0]
 	except:
-		HttpResponse("Server Busy! Please Try again.")
+		return HttpResponse("Server Busy! Please Try again.")
 
 	
 	
