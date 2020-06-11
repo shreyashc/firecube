@@ -31,6 +31,19 @@
 	</header>
 	<div id="saperator">.</div>
 
+<h5 class="heading">{{ global_name }}</h5>
+	<h2 class="week">{{date}}</h2>
+
+	{% for movie in global_list %}
+	<div class="each" >
+		<h4 class="song">{{movie.1}}.{{movie.2}}</h4>
+		
+		<div class="downloads">
+			<a href=" {% url 'ytredirect' %}?query={{movie.2}} trailer" ><i class="fab fa-youtube"></i>
+			watch Trailer</a>
+		</div>			
+	</div>
+	{% endfor %}
 
 	<h5 class="heading">{{ list_name }}</h5>
 	<h2 class="week">{{date}}</h2>

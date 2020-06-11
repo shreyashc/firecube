@@ -10,6 +10,7 @@ def home(request):
 	return render(request,'index.html')
 
 
+
 def movies(request):
 	
 	urlOfTrending="https://www.imdb.com/india/released/"
@@ -28,11 +29,29 @@ def movies(request):
 		temp=trend.text.strip().split("\n")
 		finalTrendingList.append(temp)
 
+	urlOfTrendingGlobal="https://www.imdb.com/india/global/"
+
+	try:
+		requestOfTrendingGlobal=requests.get(urlOfTrendingGlobal)
+	except:
+		return HttpResponse("Server Error")
+
+	soupOfTrendingGlobal=BeautifulSoup(requestOfTrendingGlobal.content,'lxml')
+	rawListOfTrendingGlobal=soupOfTrendingGlobal.find_all('div',{"class":"trending-list-rank-item-data-container"})
+		
+	finalTrendingListGlobal=[]
+
+	for trend in rawListOfTrendingGlobal:
+		temp=trend.text.strip().split("\n")
+		finalTrendingListGlobal.append(temp)
+
 	date=datetime.date.today()
 	context={
-		'list_name':"Trending Movies/Web series",
+		'list_name':"Trending Movies/Web Series(LOCAL)",
 		'movie_list':finalTrendingList,
 		'date':date,
+		'global_list':finalTrendingListGlobal,
+		'global_name':"Trending Movies/Web Series(GLOBAL)"
 	}
 
 	return render(request, 'movies.html',context)
