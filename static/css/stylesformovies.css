@@ -175,7 +175,7 @@ header nav ul li a.active{
 	display: block;
 	margin:3px;
 	padding: 8px;
-	font-weight:lighter;
+	font-weight:normal;
 }
 .artist{
 	display:inline-block; 
