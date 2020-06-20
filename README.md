@@ -11,5 +11,5 @@ Get Latest Information about:
 - Watch Trailers/view
 
 # Screenshots
-![screenshots](screenshots/ss1.png) ![screenshots](screenshots/ss2.png) ![screenshots](screenshots/ss3.png)
-![screenshots](screenshots/ss4.png) ![screenshots](screenshots/ss5.png) ![screenshots](screenshots/ss6.png)
+![screenshots](screenshots/ss1.jpg) ![screenshots](screenshots/ss2.jpg) ![screenshots](screenshots/ss3.jpg)
+![screenshots](screenshots/ss4.jpg) ![screenshots](screenshots/ss5.jpg) ![screenshots](screenshots/ss6.jpg)
