@@ -15,10 +15,9 @@ def movies(request):
 	
 	urlOfTrending="https://www.imdb.com/india/released/"
 
-	try:
-		requestOfTrending=requests.get(urlOfTrending)
-	except:
-		return HttpResponse("Server Error")
+	
+	requestOfTrending=requests.get(urlOfTrending)
+	
 
 	soupOfTrending=BeautifulSoup(requestOfTrending.content,'lxml')
 	rawListOfTrending=soupOfTrending.find_all('div',{"class":"trending-list-rank-item-data-container"})
@@ -163,12 +162,12 @@ def hothundred(request):
 
 def ytredirect(request):
 	video_name=str(request.GET['query'])
-
+	headers= {"User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"}
 	base_url_yt="https://www.youtube.com/"
 	url_for_searchquery_request="https://www.youtube.com/results?search_query="+video_name
 
 	try:
-		r= requests.get(url_for_searchquery_request)
+		r= requests.get(url_for_searchquery_request,headers=headers)
 	except:
 		return HttpHttpResponse("Server Error")
 		
@@ -285,12 +284,12 @@ def hinditopfifty(request):
 
 def download(request):
 	video_name=str(request.GET['query'])
-
+	headers= {"User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"}
 	base_url_yt="https://www.youtube.com/"
 	url_for_searchquery_request="https://www.youtube.com/results?search_query="+video_name
 
 	try:
-		r= requests.get(url_for_searchquery_request)
+		r= requests.get(url_for_searchquery_request,headers=headers)
 	except:
 		return HttpResponse("Server Error")
 	
