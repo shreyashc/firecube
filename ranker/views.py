@@ -6,16 +6,14 @@ import requests
 from django.template.defaultfilters import filesizeformat
 import pafy
 import datetime
-from .utils.hmm import getYtUrl
+from .utils.YTScrapper import getYtUrl
+from django.conf import settings
 
 def home(request):
-    x =getYtUrl("Blindin lights")
-    print(x)
     return render(request, 'index.html')
 
 
 def movies(request):
-
     urlOfTrending = "https://www.imdb.com/india/released/"
 
     requestOfTrending = requests.get(urlOfTrending)
@@ -169,34 +167,9 @@ def hothundred(request):
 
 def ytredirect(request):
     video_name = str(request.GET['query'])
-    headers = {
-        "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"}
-    base_url_yt = "https://www.youtube.com/"
-    url_for_searchquery_request = "https://www.youtube.com/results?search_query="+video_name
-
-    try:
-        r = requests.get(url_for_searchquery_request, headers=headers)
-    except:
-        return HttpHttpResponse("Server Error")
-
-    try:
-        soup = BeautifulSoup(r.content, 'lxml')
-    except:
-        soup = BeautifulSoup(r.content, 'html.parser')
-
-    related_url_list = []
-
-    print(soup)
-
-    for url in soup.find_all('a'):
-        if url.get('href')[:7] == '/watch?':
-            related_url_list.append(url.get('href'))
-
-    try:
-        redirect_url = base_url_yt+related_url_list[0]
-    except:
+    redirect_url = getYtUrl(video_name)
+    if redirect_url is None:
         return HttpResponse("Server Busy! Please Try again")
-
     return HttpResponseRedirect(redirect_url)
 
 
@@ -289,38 +262,15 @@ def hinditopfifty(request):
 
 def download(request):
     video_name = str(request.GET['query'])
-    headers = {
-        "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"}
-    base_url_yt = "https://www.youtube.com/"
-    url_for_searchquery_request = "https://www.youtube.com/results?search_query="+video_name
-
-    try:
-        r = requests.get(url_for_searchquery_request, headers=headers)
-    except:
-        return HttpResponse("Server Error")
-
-    try:
-        soup = BeautifulSoup(r.content, 'lxml')
-    except:
-        soup = BeautifulSoup(r.content, 'html.parser')
-
-    related_url_list = []
-
-    for url in soup.find_all('a'):
-        if url.get('href')[:7] == '/watch?':
-            related_url_list.append(url.get('href'))
-            break
-
-    try:
-        video_url = base_url_yt+related_url_list[0]
-    except:
+    video_url = getYtUrl(video_name)
+    print(video_url)
+    if video_url is None:
         return HttpResponse("Server Busy! Please Try again.")
-
-    pafy.set_api_key('AIzaSyD-owYkNboeFdmz_6W3Wfg9S8HCI-lqZAU')
+    ytApiKey = settings.YT_API_KEY
+    pafy.set_api_key(ytApiKey)
     video = pafy.new(video_url)
     stream = video.streams
     stream_audio = video.audiostreams
-
     video_audio_streams = []
     for s in stream:
         video_audio_streams.append({
@@ -360,8 +310,8 @@ def youtube(request):
 
 def ytdownloader(request):
 
-    pafy.set_api_key('AIzaSyD-owYkNboeFdmz_6W3Wfg9S8HCI-lqZAU')
-
+    ytApiKey = settings.YT_API_KEY
+    pafy.set_api_key(ytApiKey)
     video_url = request.GET['video_url']
     try:
         video = pafy.new(video_url)
