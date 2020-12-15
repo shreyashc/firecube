@@ -10,12 +10,9 @@ cycler==0.10.0
 distlib==0.3.0
 dj-database-url==0.5.0
 Django==3.0.7
-
-
 django-heroku==0.3.1
 Faker==4.0.3
 filelock==3.0.12
-
 gunicorn==20.0.4
 idna==2.9
 importlib-metadata==1.6.0
@@ -23,16 +20,11 @@ kiwisolver==1.2.0
 lazy-object-proxy==1.4.3
 lxml==4.5.1
 pafy==0.5.5
-
 pipenv==2018.11.26
-
 psycopg2==2.8.5
-
 pyparsing==2.4.7
 python-dateutil==2.8.1
-pytube3==9.6.4
 pytz==2019.3
-
 requests==2.23.0
 six==1.14.0
 soupsieve==2.0
@@ -45,5 +37,6 @@ virtualenv==20.0.17
 virtualenv-clone==0.5.4
 whitenoise==5.0.1
 wrapt==1.12.1
-youtube-dl==2020.5.3
+youtube-dl==2020.12.14
 zipp==3.1.0
+selenium==3.141.0
