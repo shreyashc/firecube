@@ -6,9 +6,11 @@ import requests
 from django.template.defaultfilters import filesizeformat
 import pafy
 import datetime
-
+from .utils.hmm import getYtUrl
 
 def home(request):
+    x =getYtUrl("Blindin lights")
+    print(x)
     return render(request, 'index.html')
 
 
