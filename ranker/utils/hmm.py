@@ -9,7 +9,7 @@ chrome_options.add_argument('headless')
 
 CHROMEDRIVER_PATH = "/app/.chromedriver/bin/chromedriver"
 
-chrome_bin = os.environ.get(‘GOOGLE_CHROME_BIN’, “chromedriver”)
+chrome_bin = os.environ.get('GOOGLE_CHROME_BIN', "chromedriver")
 
 prefs = {'profile.default_content_setting_values': {'cookies': 2, 'images': 2
                             }}
