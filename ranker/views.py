@@ -6,8 +6,9 @@ import requests
 from django.template.defaultfilters import filesizeformat
 import pafy
 import datetime
-from .utils.YTScrapper import getYtUrl
 from django.conf import settings
+from .utils import getYtUrl
+
 
 def home(request):
     return render(request, 'index.html')
