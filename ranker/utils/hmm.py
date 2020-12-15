@@ -1,16 +1,21 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
+import os
 import lxml
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('headless')
-# chrome_options.binary_location = GOOGLE_CHROME_PATH
+
+CHROMEDRIVER_PATH = "/app/.chromedriver/bin/chromedriver"
+
+chrome_bin = os.environ.get(‘GOOGLE_CHROME_BIN’, “chromedriver”)
+
 prefs = {'profile.default_content_setting_values': {'cookies': 2, 'images': 2
                             }}
 chrome_options.add_experimental_option('prefs', prefs)
 
-chrome_options.binary_location = GOOGLE_CHROME_PATH
+chrome_options.binary_location = chrome_bin
 browser = webdriver.Chrome(
     execution_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
 
