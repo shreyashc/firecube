@@ -16,8 +16,9 @@ prefs = {'profile.default_content_setting_values': {'cookies': 2, 'images': 2
 chrome_options.add_experimental_option('prefs', prefs)
 
 chrome_options.binary_location = chrome_bin
+
 browser = webdriver.Chrome(
-    execution_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
+    executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
 
 # browser = webdriver.Chrome(options=chrome_options)
 
