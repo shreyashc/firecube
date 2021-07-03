@@ -8,7 +8,7 @@ cycler==0.10.0
 defusedxml==0.6.0
 distlib==0.3.1
 dj-database-url==0.5.0
-Django==3.0.8
+Django==3.1.9
 django-allauth==0.42.0
 django-cors-headers==3.4.0
 django-crispy-forms==1.9.2
@@ -30,7 +30,7 @@ idna==2.10
 joblib==0.16.0
 jsmin==2.2.2
 kiwisolver==1.2.0
-lxml==4.5.1
+lxml==4.6.3
 matplotlib==3.2.2
 numpy==1.19.0
 oauthlib==3.1.0
