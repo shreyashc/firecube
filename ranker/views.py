@@ -7,7 +7,8 @@ from django.template.defaultfilters import filesizeformat
 import pafy
 import datetime
 from django.conf import settings
-from .utils import getYtUrl
+from utils import ytscrapper
+
 
 
 def home(request):
@@ -168,7 +169,7 @@ def hothundred(request):
 
 def ytredirect(request):
     video_name = str(request.GET['query'])
-    redirect_url = getYtUrl(video_name)
+    redirect_url = ytscrapper.getYtUrl(video_name)
     if redirect_url is None:
         return HttpResponse("Server Busy! Please Try again")
     return HttpResponseRedirect(redirect_url)
@@ -263,7 +264,7 @@ def hinditopfifty(request):
 
 def download(request):
     video_name = str(request.GET['query'])
-    video_url = getYtUrl(video_name)
+    video_url = ytscrapper.getYtUrl(video_name)
     print(video_url)
     if video_url is None:
         return HttpResponse("Server Busy! Please Try again.")
