@@ -1,0 +1,24 @@
+ <div class="card">
+     <div class="card-image">
+         <a href={{link}}>
+             <figure class=" image is-4by3">
+                 <img src={{src}} alt="action-image">
+             </figure>
+         </a>
+     </div>
+     <header class="card-header dropdown is-flex">
+         <a class="card-header-title">
+             {{title}}
+         </a>
+         <button class="card-header-icon dropdown-trigger ml-auto" data-target="content-{{key}}" data-btn="btn-{{key}}">
+             <span class="icon">
+                 <i class="fas fa-angle-down" id="btn-{{key}}" aria-hidden="true"></i>
+             </span>
+         </button>
+     </header>
+     <div class="card-content is-hidden" id="content-{{key}}">
+         <div class="content ">
+             {{desc}}
+         </div>
+     </div>
+ </div>

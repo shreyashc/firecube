@@ -1,88 +1,91 @@
+{% extends 'navbar.html' %}
 {% load static %}
-<!DOCTYPE html>
-
-<html lang="en">
-<meta name="viewport" content="width=device-width,initial-scale1.0">
-<head>
+{% block title %}Firecube{% endblock title %}
 
 
-	<title>Fire Cube</title>
+{% block content %}
+<div class="mt-4"></div>
+<div class="columns">
+  <div class="column">
+    {% url 'movies' as temp_link %}
+    {% static 'images/ott.webp' as temp_src %}
+    {% include "_card.html" with key="1" title="Trending Movies/Web Series" desc="View latest movies and webseries trending on IMDb" link=temp_link  src=temp_src %}
+  </div>
 
-	<meta name="theme-color" content="#000000">
-	<meta name="msapplication-navbutton-color" content="#000000">
-	<meta name="apple-mobile-web-app-status-bar-style" content="#000000">
-<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-	<!-- google fonts -->
-	<link rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Roboto">
-	
-	<!-- fonts-awesome icons cdn -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-	
-	<!-- local css -->
-	<link rel="stylesheet" type="text/css" href="{% static 'css/stylesforindex.css' %}">
-	<!-- title logo -->
-	<link rel="icon" href="{% static 'icons/cube.ico' %}" type="image/gif" sizes="16x16">
-</head>
-	<header>
-		<div class="logo">
-			FiRE <i class="fas fa-cube"></i>
-		</div>
-		<nav >
-			<ul>
-				<li><a href="{% url 'home' %}">Home</a></li>
-				<li><a href="{% url 'youtube' %}">YouTube Downloder</a></li>
-				<li><a href="{% url 'about' %}">About</a></li>
-			</ul>
-		</nav>
-		<div class="menu-toggle">
-			<i class="fas fa-bars"></i>
-		</div>
-	</header>
+  <div class="column">
+    {% url 'kannadatopfifty' as temp_link %}
+    {% static 'images/kan.webp' as temp_src %}
+    {% include "_card.html" with key="2" title="Weekly Top 50 Songs (Kannada)" desc="listen/watch kannada weekly top 50 Songs" link=temp_link  src=temp_src %}
+  </div>
 
-	
-<body>
-	<div class="list">
-		<ul id="ullist">
-			<li><a href="{% url 'movies' %}">Trending Movies/Web Series</a></li>
+  <div class="column">
+    {% url 'hinditopfifty' as temp_link %}
+    {% static 'images/hin.webp' as temp_src %}
+    {% include "_card.html" with key="3" title="Weekly Top 50 Songs (Hindi)" desc="listen/watch Hindi weekly top 50 Songs" link=temp_link   src=temp_src %}
+  </div>
+</div>
 
-			<li><a href="{% url 'kannadatopfifty' %}">Kannada Weekly Top 50 Songs</a></li>
+<div class="columns">
+  <div class="column">
+    {% url 'hothundred' as temp_link %}
+    {% static 'images/b100.webp' as temp_src %}
+    {% include "_card.html" with key="4" title="Billboard HOT100" desc="listen/watch Billboard HOT100 (weekly)" link=temp_link  src=temp_src %}
+  </div>
+  <div class="column">
+    {% url 'toptwohundred' as temp_link %}
+    {% static 'images/b200.webp' as temp_src %}
+    {% include "_card.html" with key="5" title="Billboard TOP200" desc="listen/watch Billboard TOP200 (weekly)" link=temp_link  src=temp_src %}
+  </div>
 
-			<li><a href="{% url 'hinditopfifty' %}">Hindi Weekly Top 50 Songs</a></li>
-			
-			<li><a href="{% url 'hothundred' %}">billboard Hot 100 songs</a></li>
-			
-			<li><a href="{% url 'topten' %}">billboard Top 10 Songs(billboard200)</a></li>
-			<li><a href="{% url 'toptwohundred' %}">billboard Top 200 Songs(billboard200)</a></li>
+  <div class="column">
+    {% url 'youtube' as temp_link %}
+    {% static 'images/ytt.webp' as temp_src %}
+    {% include "_card.html" with key="6" title="Youtube Downloader" desc="Download youtube vidoes video/audio" link=temp_link   src=temp_src %}
+  </div>
+
+</div>
+
+<footer>
+  <p class="footer-heart">
+    Made with
+    <g-emoji class="g-emoji" alias="heart"
+      fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png">
+      <img class="emoji" alt="heart" height="20" width="20"
+        src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png" /></g-emoji>
+    by
+    <a href="https://github.com/shreyashc" target="_blank">Shreyas HC</a>
+  </p>
+</footer>
 
 
-			
 
-		</ul>
-	</div>
-	
-		
-	</div>
-<div class="zz">
-	<div id="background_animation">
+{% endblock content %}
 
-  		<span></span>
-  		<span></span>
-  		<span></span>
-  		<span></span>
-  		<span></span>
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}" />
+{% endblock css %}
 
-		<div id="rouge"></div>
-		<div id="bleu "></div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('.menu-toggle').click(function(){
-				$('nav').toggleClass('active')
-			})
-		})
-	</script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+{% block js %}
 
-</html>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const $dropDowns = Array.prototype.slice.call(document.querySelectorAll('.dropdown-trigger'), 0);
+    if ($dropDowns.length > 0) {
+      $dropDowns.forEach(el => {
+        el.addEventListener('click', () => {
+
+          const target = el.dataset.target;
+          const btn = el.dataset.btn
+          const $target = document.getElementById(target);
+          const $btn = document.getElementById(btn);
+          $target.classList.toggle('is-hidden');
+
+          $btn.classList.toggle('fa-angle-down');
+          $btn.classList.toggle('fa-angle-up');
+
+        });
+      });
+    }
+  });
+</script>
+{% endblock js %}

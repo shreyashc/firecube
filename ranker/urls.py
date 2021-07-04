@@ -2,7 +2,7 @@ from django.urls import path
 from .views import home,movies,topten,toptwohundred,hothundred,ytredirect,download,kannadatopfifty,hinditopfifty,youtube,ytdownloader,about
 urlpatterns=[
 	path('', home,name='home'),
-	path('movies/', movies,name='movies'),
+	path('movies', movies,name='movies'),
 	path('topten', topten,name='topten'),
 	path('toptwohundred', toptwohundred,name='toptwohundred'),
 	path('hothundred', hothundred,name="hothundred"),
