@@ -12,7 +12,7 @@ prefs = {'profile.default_content_setting_values': {'cookies': 2, 'images': 2}}
 chrome_options.add_experimental_option('prefs', prefs)
 
 
-if settings.DEBUG:
+if False:
 	browser = webdriver.Chrome(executable_path=os.path.join(settings.BASE_DIR,"webdriver","chromedriver.exe") ,chrome_options=chrome_options)
 else:
 	CHROMEDRIVER_PATH = "/app/.chromedriver/bin/chromedriver"
