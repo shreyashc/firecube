@@ -1,145 +1,205 @@
+{% extends 'navbar.html' %}
 {% load static %}
+{% block title %}Downloade{% endblock title %}
 
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="theme-color" content="#000000">
-  <meta name="msapplication-navbutton-color" content="#000000">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#000000">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-	<meta name="viewport" content="width=device-width,initial-scale1.0">
+{% block content %}
 
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-	<!-- local styles -->
-	<link rel="stylesheet" type="text/css" href="{% static 'css/stylesfordownload.css' %}">
 
-  <link rel="icon" href="{% static 'icons/cube.ico' %}" type="image/gif" sizes="16x16">
-
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-	<title>Download</title>
-</head>
-<body>
-	<header>
-		<div class="logo">
-			FiRE <i class="fas fa-cube"></i>
-		</div>
-		<nav >
-			<ul>
-				<li><a href="{% url 'home' %}">Home</a></li>
-				<li><a href="{% url 'youtube' %}">YouTube.Downloder</a></li>
-				<li><a href="{% url 'about' %}">About</a></li>
-			</ul>
-		</nav>
-		<div class="menu-toggle">
-			<i class="fas fa-bars"></i>
-		</div>
-	</header>
-	<div id="saperator">.</div>
-	{% if streams %}
-	<div class="text-center">
-  		<img src="{{ thumb }}"  alt="thumbnail">
-	</div>
-	{% endif %}
-	<div class="titile">
-		<h3>{{title}}</h3>
-	</div>
-{% if streams %}
-<div class="table-wrapper">
-	<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Resolution</th>
-      <th scope="col">Size</th>
-      <th scope="col">Extension</th>
-      <th scope="col">Download</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-  	{% for stream in streams %}
-    <tr>
-      
-      <td>{{ stream.resolution }}</td>
-      <td>{{ stream.file_size}}</td>
-      <td>{{ stream.extension }}</td>
-      <td><a href="{{ stream.video_url }}" style="text-decoration: none;" download="{{ title }}.{{ extension }}" target="_blank" >Download<i class=" fa fa-download"></i></a></td>
-    </tr>
-
-    {% endfor %}
-
-  </tbody>
-</table>
+<div class="card wrap">
+  <div class="meta">
+    <div class="img-wrap">
+      <figure class="img">
+        <img src="{{ meta.thumb }}" alt="thumbnail">
+      </figure>
+    </div>
+    <div class="info">
+      <h2 class="has-text-weight-bold is-size-5">{{meta.title}}</h2>
+      <p><span class="has-text-weight-semibold">Duaration </span>{{meta.duration}}</p>
+      <p>{{meta.viewcount}}<span class="has-text-weight-semibold"> Views</span></p>
+    </div>
+  </div>
 </div>
-{% endif %}
 
+<div class="table-container mt-4">
+  <table class="table is-hoverable">
+    <thead>
+      <tr>
+        <th>Resolution</th>
+        <th>Size</th>
+        <th>Extension</th>
+        <th>Download</th>
+      </tr>
+    </thead>
 
-{% if audio_streams %}
-<h4>AUDIO ONLY</h4>
-<div class="table-wrapper">
-	<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Resolution</th>
-      <th scope="col">Size</th>
-      <th scope="col">Extension</th>
-      <th scope="col">Download</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-  	{% for stream in audio_streams %}
-    <tr>
-      
-      <td>{{ stream.resolution }}</td>
-      <td>{{ stream.file_size}}</td>
-      <td>{{ stream.extension }}</td>
-      <td><a href="{{ stream.video_url}}" style="text-decoration: none;" download="{{ title }}.{{ extension }}" target="_blank" >Download<i class=" fa fa-download"></i></a></td>
-    </tr>
+    <tbody>
+      {% for stream in streams %}
+      <tr>
 
-    {% endfor %}
-
-  </tbody>
-</table>
+        <td>{{ stream.resolution }}</td>
+        <td>{{ stream.file_size}}</td>
+        <td>{{ stream.extension }}</td>
+        <td>
+          {% comment %} <a class="button is-primary" href="{{ stream.video_url }}"
+            style="text-decoration: none;">Download</a> {% endcomment %}
+          <button class="button is-primary"
+            onclick="start_download(event,'{{meta.videoid}}','{{ forloop.counter0 }}','v')">
+            Download
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
-{% endif %}
 
-{% if video_streams %}
-<h4>VIDEO ONLY</h4>
-<div class="table-wrapper">
-	<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Resolution</th>
-      <th scope="col">Size</th>
-      <th scope="col">Extension</th>
-      <th scope="col">Download</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-  	{% for stream in video_streams %}
-    <tr>
-      
-      <td>{{ stream.resolution }}</td>
-      <td>{{ stream.file_size}}</td>
-      <td>{{ stream.extension }}</td>
-      <td><a href="{{ stream.video_url}}" style="text-decoration: none;" download="{{ title }}.{{ extension }}" target="_blank" >Download<i class=" fa fa-download"></i></a></td>
-    </tr>
+<div class="table-container mt-4">
+  <h3 class="has-text-centered has-text-primary">AUDIO ONLY</h3>
+  <table class="table is-hoverable">
+    <thead>
+      <tr>
+        <th>Bitrate (Kbps)</th>
+        <th>Size</th>
+        <th>Extension</th>
+        <th>Download</th>
+      </tr>
+    </thead>
 
-    {% endfor %}
+    <tbody>
+      {% for stream in audio_streams %}
+      <tr>
 
-  </tbody>
-</table>
+        <td>{{ stream.bitrate }} Kbps</td>
+        <td>{{ stream.file_size}}</td>
+        <td>mp3</td>
+        <td>
+          <button class="button is-primary"
+            onclick="start_download(event,'{{meta.videoid}}','{{ forloop.counter0 }}','mp3')">
+            Download
+          </button>
+        </td>
+      </tr>
+
+      {% endfor %}
+      {% for stream in audio_streams %}
+      <tr>
+
+        <td>{{ stream.bitrate }} Kbps</td>
+        <td>{{ stream.file_size}}</td>
+        <td>{{ stream.extension }}</td>
+        <td>
+          <button class="button is-primary"
+            onclick="start_download(event,'{{meta.videoid}}','{{ forloop.counter0 }}','a')">
+            Download
+          </button>
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
-{% endif %}
-</body>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('.menu-toggle').click(function(){
-				$('nav').toggleClass('active')
-			})
-		})
-	</script>
-</html>
+
+
+{% endblock content %}
+
+{% block css %}
+<style>
+  .meta {
+    display: flex;
+
+  }
+
+  img {
+    height: 180px;
+    width: auto;
+  }
+
+  .info {
+    padding: 8px;
+    margin-left: 10px;
+  }
+
+  .wrap {
+    padding: 8px;
+    width: 50%;
+    margin: 20px auto;
+  }
+
+  table {
+    width: 70%;
+    margin: 25px auto;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 769px),
+  print {
+    .wrap {
+      width: 95%;
+      margin: 20px auto;
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .img-wrap {
+      align-self: center;
+    }
+
+    table {
+      width: 99%;
+      margin: 25px auto;
+    }
+  }
+</style>
+{% endblock css %}
+
+{% block js %}
+
+<script>
+  async function start_download(event, videoid, idx, stream_type) {
+    event.target.classList.add("is-loading");
+    const url = "/get_download_url"
+    const data = {
+      videoid,
+      idx,
+      stream_type,
+    };
+    try {
+      const _res = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': "{{ csrf_token }}"
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
+      })
+      const result = await _res.json();
+      const x = download(result.filepath);
+
+    } catch (err) {
+      event.target.classList.add("is-danger");
+    } finally {
+      event.target.classList.remove("is-loading");
+    }
+
+    function download(url) {
+      const a = document.createElement('a')
+      a.href = url
+      a.download = url.split('/').pop()
+      document.body.appendChild(a)
+      a.click();
+      document.body.removeChild(a)
+    }
+
+  }
+</script>
+
+{% endblock js %}

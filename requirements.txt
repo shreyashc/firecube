@@ -25,3 +25,4 @@ whitenoise==5.0.1
 youtube-dl==2020.12.14
 selenium==3.141.0
 python-dotenv==0.14.0
+pydub==0.25.1

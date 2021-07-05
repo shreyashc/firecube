@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home,movies,topten,toptwohundred,hothundred,ytredirect,download,kannadatopfifty,hinditopfifty,youtube,ytdownloader,about
+from .views import home,movies,topten,toptwohundred,hothundred,ytredirect,download,kannadatopfifty,hinditopfifty,youtube,ytdownloader,about,get_download_url
 urlpatterns=[
 	path('', home,name='home'),
 	path('movies', movies,name='movies'),
@@ -12,5 +12,6 @@ urlpatterns=[
 	path('download', download,name='download'),
 	path('youtube', youtube,name='youtube'),
 	path('ytdownloader', ytdownloader,name='ytdownloader'),
+	path('get_download_url', get_download_url,name='get_download_url'),
 	path('about', about,name='about'),
 ]

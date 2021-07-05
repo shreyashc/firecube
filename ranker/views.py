@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import lxml
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from bs4 import BeautifulSoup
 import requests
 from django.template.defaultfilters import filesizeformat
@@ -8,8 +8,14 @@ import pafy
 import datetime
 from django.conf import settings
 from utils import ytscrapper
+import youtube_dl
+import json
+import random
+from django.core.files.storage import FileSystemStorage
+from urllib.parse import quote
+from pydub import AudioSegment
 
-
+import os
 
 def home(request):
     return render(request, 'index.html')
@@ -315,6 +321,7 @@ def ytdownloader(request):
     ytApiKey = settings.YT_API_KEY
     pafy.set_api_key(ytApiKey)
     video_url = request.GET['video_url']
+    
     try:
         video = pafy.new(video_url)
     except:
@@ -323,43 +330,41 @@ def ytdownloader(request):
         }
         return render(request, 'yt.html', context)
 
-    stream = video.streams
-    stream_audio = video.audiostreams
 
-    video_audio_streams = []
-    for s in stream:
-        video_audio_streams.append({
-            'resolution': s.resolution,
+    video_audio_streams = [
+        {
+            'resolution': s.resolution.split("x")[1]+"p", # 360p,720p..
             'extension': s.extension,
             'file_size': filesizeformat(s.get_filesize()),
             'video_url': s.url + "&title=" + video.title
-        })
+        }
+        for s in video.streams
+        ]
+   
 
-    stream_video = video.videostreams
-    video_streams = []
-    for s in stream_video:
-        video_streams.append({
-            'resolution': s.resolution,
+
+    audio_streams = [
+        {
+            'bitrate': s.rawbitrate // 1000, #bps -> kbps
             'extension': s.extension,
             'file_size': filesizeformat(s.get_filesize()),
             'video_url': s.url + "&title=" + video.title
-        })
+        }
+        for s in video.audiostreams
+        ]
 
-    audio_streams = []
-    for s in stream_audio:
-        audio_streams.append({
-            'resolution': s.resolution,
-            'extension': s.extension,
-            'file_size': filesizeformat(s.get_filesize()),
-            'video_url': s.url + "&title=" + video.title
-        })
 
     context = {
         'streams': video_audio_streams,
         'audio_streams': audio_streams,
-        'video_streams': video_streams,
-        'title': video.title,
-        'thumb': video.bigthumbhd,
+        'meta': {
+         'title': video.title,
+         'thumb': video.bigthumbhd,
+         'duration':video.duration,
+         'published':video.published,
+         'viewcount':video.viewcount,
+         'videoid':video.videoid
+        }
     }
 
     return render(request, 'download.html', context)
@@ -367,3 +372,45 @@ def ytdownloader(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+def get_download_url(request):
+    ytApiKey = settings.YT_API_KEY
+    pafy.set_api_key(ytApiKey)
+
+    data = request.body.decode('utf-8')
+    req_data = json.loads(data)
+    videoid = req_data['videoid']
+    idx = int(req_data['idx'])
+    stream_type = req_data['stream_type']
+    
+    try:
+        video = pafy.new(videoid)
+
+        if stream_type == 'mp3':
+            stream = video.audiostreams[idx]
+            _filename = video.title+ str(stream.rawbitrate // 1000) +"."+stream.extension
+            filepath_temp = "/media/"+_filename
+            stream.download(filepath=filepath_temp,quiet=True)
+            sound = AudioSegment.from_file(os.path.join(settings.MEDIA_ROOT, _filename))
+            filepath_temp = os.path.join(settings.MEDIA_ROOT, _filename.replace("."+stream.extension,".mp3"))
+            sound.export(filepath_temp, format="mp3", bitrate = str(stream.rawbitrate // 1000)+"K")
+            filepath_temp = "/media/"+ _filename.replace("."+stream.extension,".mp3")
+            
+        elif stream_type == 'a':
+            stream = video.audiostreams[idx]
+            filepath_temp = "/media/"+video.title+ str(stream.rawbitrate // 1000) +"."+stream.extension
+            stream.download(filepath=filepath_temp,quiet=True)
+            
+        else:
+            stream = video.streams[idx]
+            filepath_temp = "/media/"+video.title+stream.resolution.split("x")[1]+"p" + "."+stream.extension
+            stream.download(filepath=filepath_temp,quiet=True)
+            
+
+    except Exception as e:
+        print(e)
+        return JsonResponse(status=400,data={'message':"could not find video/audio"})
+
+    return JsonResponse({'filepath':filepath_temp})
+

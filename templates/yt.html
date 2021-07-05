@@ -4,28 +4,39 @@
 
 {% block content %}
 
-<div class="">
-	<h1 class="title is-1 has-text-weight-bold has-text-centered py-3 mb-4">Youtube Downloader</h1>
-</div>
+<h1 class="title is-1 has-text-weight-bold has-text-centered py-3 mb-4">Youtube Downloader</h1>
+
 
 <form action="ytdownloader">
 	<div class="control  is-flex-widescreen-only is-flex-desktop-only is-flex-tablet-only">
-		<input name='video_url' class="input is-large m-2" placeholder="Enter Video URL(link)">
-		<button class="button is-black is-large m-2 is-fullwidth-mobile-only">
+		<input name='video_url' type="url" class="input is-large" placeholder="Enter video URL" required>
+		<button class="button is-black is-large is-fullwidth-mobile-only">
 			Submit
 		</button>
 	</div>
-
+	{% if error %}
+	<p class="has-text-danger has-text-centered">{{error}}</p>
+	{% endif %}
 </form>
 
 {% endblock content %}
 
 {% block css %}
 <style>
+	input,
+	button {
+		margin: 0.4rem;
+	}
+
 	@media screen and (max-width: 769px),
 	print {
 		.is-fullwidth-mobile-only {
 			width: 100%;
+		}
+
+		input,
+		button {
+			margin: 0.4rem 0;
 		}
 	}
 </style>
