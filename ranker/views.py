@@ -390,7 +390,7 @@ def get_download_url(request):
         if stream_type == 'mp3':
             stream = video.audiostreams[idx]
             _filename = video.title+ str(stream.rawbitrate // 1000) +"."+stream.extension
-            filepath_temp = "/media/"+_filename
+            filepath_temp = os.path.join(settings.MEDIA_ROOT,_filename)
             stream.download(filepath=filepath_temp,quiet=True)
             sound = AudioSegment.from_file(os.path.join(settings.MEDIA_ROOT, _filename))
             filepath_temp = os.path.join(settings.MEDIA_ROOT, _filename.replace("."+stream.extension,".mp3"))
