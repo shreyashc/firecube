@@ -14,7 +14,7 @@ import random
 from django.core.files.storage import FileSystemStorage
 from urllib.parse import quote
 from pydub import AudioSegment
-
+from django.views.decorators.csrf import csrf_exempt
 import os
 
 def home(request):
@@ -373,7 +373,7 @@ def ytdownloader(request):
 def about(request):
     return render(request, 'about.html')
 
-
+@csrf_exempt
 def get_download_url(request):
     ytApiKey = settings.YT_API_KEY
     pafy.set_api_key(ytApiKey)
