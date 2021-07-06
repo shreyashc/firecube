@@ -208,7 +208,7 @@
         body: JSON.stringify(data)
       })
       const result = await _res.json();
-      const x = download(result.filepath);
+      download(result.filepath);
       event.target.innerHTML = "Downloading...";
     } catch (err) {
       event.target.classList.add("is-danger");
