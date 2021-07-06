@@ -1,3 +1,16 @@
 *.env
 media/*
 !media/.gitkeep
+
+
+
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+
+*.py[cod]
+*$py.class
+
+
