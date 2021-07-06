@@ -400,12 +400,13 @@ def get_download_url(request):
         elif stream_type == 'a':
             stream = video.audiostreams[idx]
             filepath_temp = "/media/"+video.title+ str(stream.rawbitrate // 1000) +"."+stream.extension
-            stream.download(filepath=filepath_temp,quiet=True)  
-        else:
+            stream.download(filepath=filepath_temp,quiet=True)
+
+        elif stream_type == 'v':
             stream = video.streams[idx]
             _filename = video.title+stream.resolution.split("x")[1]+"p" + "."+ stream.extension
             filepath_temp = os.path.join(settings.MEDIA_ROOT,_filename)
-            stream.download(filepath=filepath_temp,quiet=True)
+            stream.download(filepath=filepath_temp,quiet=False)
             filepath_temp = "/media/" + _filename
             
 
