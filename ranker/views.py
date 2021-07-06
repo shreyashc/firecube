@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
+from django.utils.http import urlencode
 import lxml
 from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from bs4 import BeautifulSoup
@@ -16,6 +17,7 @@ from urllib.parse import quote
 from pydub import AudioSegment
 from django.views.decorators.csrf import csrf_exempt
 import os
+import re
 
 def home(request):
     return render(request, 'index.html')
@@ -271,45 +273,10 @@ def hinditopfifty(request):
 def download(request):
     video_name = str(request.GET['query'])
     video_url = ytscrapper.getYtUrl(video_name)
-    print(video_url)
     if video_url is None:
-        return HttpResponse("Server Busy! Please Try again.")
-    ytApiKey = settings.YT_API_KEY
-    pafy.set_api_key(ytApiKey)
-    video = pafy.new(video_url)
-    stream = video.streams
-    stream_audio = video.audiostreams
-    video_audio_streams = []
-    for s in stream:
-        video_audio_streams.append({
-            'resolution': s.resolution,
-            'extension': s.extension,
-            'file_size': filesizeformat(s.get_filesize()),
-            'video_url': s.url + "&title=" + video.title
-        })
-
-    audio_streams = []
-    audio_limit = 0
-    for s in stream_audio:
-        if audio_limit > 3:
-            break
-        audio_limit = audio_limit + 1
-        audio_streams.append({
-            'resolution': s.resolution,
-            'extension': s.extension,
-            'file_size': filesizeformat(s.get_filesize()),
-            'video_url': s.url + "&title=" + video.title
-        })
-
-    context = {
-        'streams': video_audio_streams,
-        'audio_streams': audio_streams,
-        # 'video_streams':video_streams,
-        'title': video.title,
-        'thumb': video.bigthumbhd,
-    }
-
-    return render(request, 'download.html', context)
+        return HttpResponse("Could Not Find Video")
+    redirect_url = reverse('ytdownloader') + f'?video_url={video_url}'
+    return redirect(redirect_url)
 
 
 def youtube(request):
@@ -387,9 +354,10 @@ def get_download_url(request):
     try:
         video = pafy.new(videoid)
 
-        if stream_type == 'mp3':
+        if stream_type == 'audio-mp3':
             stream = video.audiostreams[idx]
-            _filename = video.title+ str(stream.rawbitrate // 1000) +"."+stream.extension
+            _filename =  video.title + str(stream.rawbitrate // 1000) +"."+stream.extension
+            _filename = normalizeFilename(_filename)
             filepath_temp = os.path.join(settings.MEDIA_ROOT,_filename)
             stream.download(filepath=filepath_temp,quiet=True)
             sound = AudioSegment.from_file(os.path.join(settings.MEDIA_ROOT, _filename))
@@ -397,14 +365,18 @@ def get_download_url(request):
             sound.export(filepath_temp, format="mp3", bitrate = str(stream.rawbitrate // 1000)+"K")
             filepath_temp = "/media/"+ _filename.replace("."+stream.extension,".mp3")
             
-        elif stream_type == 'a':
+        elif stream_type == 'audio':
             stream = video.audiostreams[idx]
-            filepath_temp = "/media/"+video.title+ str(stream.rawbitrate // 1000) +"."+stream.extension
+            _filename = video.title+ str(stream.rawbitrate // 1000) +"."+stream.extension
+            _filename = normalizeFilename(_filename)
+            filepath_temp = os.path.join(settings.MEDIA_ROOT,_filename)
             stream.download(filepath=filepath_temp,quiet=True)
+            filepath_temp = "/media/" + _filename
 
-        elif stream_type == 'v':
+        elif stream_type == 'video':
             stream = video.streams[idx]
             _filename = video.title+stream.resolution.split("x")[1]+"p" + "."+ stream.extension
+            _filename = normalizeFilename(_filename)
             filepath_temp = os.path.join(settings.MEDIA_ROOT,_filename)
             stream.download(filepath=filepath_temp,quiet=False)
             filepath_temp = "/media/" + _filename
@@ -416,3 +388,10 @@ def get_download_url(request):
 
     return JsonResponse({'filepath':filepath_temp})
 
+
+
+ 
+def normalizeFilename(filename):
+    rstr = r"[\/\\\:\*\?\"\<\>\|]"  # '/ \ : * ? " < > |'
+    new_filename = re.sub(rstr, "", filename)
+    return new_filename.strip()

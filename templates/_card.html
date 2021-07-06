@@ -1,9 +1,11 @@
  <div class="card">
      <div class="card-image">
          <a href={{link}}>
-             <figure class=" image is-4by3">
-                 <img src={{src}} alt="action-image">
-             </figure>
+             <picture class=" image is-4by3">
+                 <source srcset='{{src}}.webp' type="image/webp">
+                 <source srcset='{{src}}.png' type="image/png">
+                 <img src='{{src}}.png' alt={{title}}>
+             </picture>
          </a>
      </div>
      <header class="card-header dropdown is-flex">

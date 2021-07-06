@@ -28,6 +28,7 @@
         <th>Size</th>
         <th>Extension</th>
         <th>Download</th>
+        <th>Mirror</th>
       </tr>
     </thead>
 
@@ -42,9 +43,12 @@
           {% comment %} <a class="button is-primary" href="{{ stream.video_url }}"
             style="text-decoration: none;">Download</a> {% endcomment %}
           <button class="button is-primary"
-            onclick="start_download(event,'{{meta.videoid}}','{{ forloop.counter0 }}','v')">
+            onclick="start_download(event,'{{meta.videoid}}','{{ forloop.counter0 }}','video')">
             Download
           </button>
+        </td>
+        <td>
+          <a href="{{ stream.video_url }}" class="button" download target="_blank">Mirror</a>
         </td>
       </tr>
       {% endfor %}
@@ -61,6 +65,7 @@
         <th>Size</th>
         <th>Extension</th>
         <th>Download</th>
+        <th>Mirror</th>
       </tr>
     </thead>
 
@@ -73,9 +78,12 @@
         <td>mp3</td>
         <td>
           <button class="button is-primary"
-            onclick="start_download(event,'{{meta.videoid}}','{{ forloop.counter0 }}','mp3')">
+            onclick="start_download(event,'{{meta.videoid}}','{{ forloop.counter0 }}','audio-mp3')">
             Download
           </button>
+        </td>
+        <td>
+          <a href="{{ stream.video_url }}" class="button" download target="_blank">Mirror</a>
         </td>
       </tr>
 
@@ -88,9 +96,12 @@
         <td>{{ stream.extension }}</td>
         <td>
           <button class="button is-primary"
-            onclick="start_download(event,'{{meta.videoid}}','{{ forloop.counter0 }}','a')">
+            onclick="start_download(event,'{{meta.videoid}}','{{ forloop.counter0 }}','audio')">
             Download
           </button>
+        </td>
+        <td>
+          <a href="{{ stream.video_url }}" class="button" download target="_blank">Mirror</a>
         </td>
       </tr>
 
@@ -115,14 +126,21 @@
     width: auto;
   }
 
+  .img-wrap {
+    flex-grow: 1;
+    flex: 1;
+    width: 40%;
+  }
+
   .info {
     padding: 8px;
     margin-left: 10px;
+    width: 60%;
   }
 
   .wrap {
     padding: 8px;
-    width: 50%;
+    width: 70%;
     margin: 20px auto;
   }
 
@@ -146,12 +164,20 @@
 
     .img-wrap {
       align-self: center;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .info {
+      width: 100%;
     }
 
     table {
       width: 99%;
       margin: 25px auto;
     }
+
   }
 </style>
 {% endblock css %}
