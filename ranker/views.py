@@ -359,7 +359,7 @@ def ytdownloader(request):
         'audio_streams': audio_streams,
         'meta': {
          'title': video.title,
-         'thumb': video.bigthumbhd,
+         'thumb': video.bigthumbhd.replace("http://","https://"),
          'duration':video.duration,
          'published':video.published,
          'viewcount':video.viewcount,

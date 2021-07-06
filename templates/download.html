@@ -1,6 +1,6 @@
 {% extends 'navbar.html' %}
 {% load static %}
-{% block title %}Downloade{% endblock title %}
+{% block title %}Download{% endblock title %}
 
 {% block content %}
 
@@ -183,9 +183,10 @@
       })
       const result = await _res.json();
       const x = download(result.filepath);
-
+      event.target.innerHTML = "Downloading...";
     } catch (err) {
       event.target.classList.add("is-danger");
+      event.target.innerHTML = "Sorry &#x29;:";
     } finally {
       event.target.classList.remove("is-loading");
     }
