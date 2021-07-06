@@ -119,15 +119,12 @@ def toptwohundred(request):
     week = soupOfBB200.find(
         'button', {"class": "date-selector__button button--link"})
     current_week = week.text.strip()
-    finalBB200List = []
-    i = 1
-    for song in rawListOfBB200:
-        if i > 200:
-            break
-        temp = song.text.strip().split("\n")
-        temp[2] = i
-        finalBB200List.append(temp)
-        i = i+1
+    print(rawListOfBB200[0])
+    finalBB200List = [
+        {"name":song.text.strip().split("\n")[0] ,"artist":song.text.strip().split("\n")[1]}
+        for song in rawListOfBB200[:201]
+    ]
+
 
     context = {
 

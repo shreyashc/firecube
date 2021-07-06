@@ -1,65 +1,124 @@
+{% extends 'navbar.html' %}
 {% load static %}
+{% block title %}Billboard 200{% endblock title %}
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta name="theme-color" content="#000000">
-	<meta name="msapplication-navbutton-color" content="#000000">
-	<meta name="apple-mobile-web-app-status-bar-style" content="#000000">
-	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+{% block content %}
 
-	<meta name="viewport" content="width=device-width,initial-scale1.0">
+<div class="info m-4">
+	<h2 class="is-size-2 has-text-centered is-family-primary is-primary has-text-link"> {{list_name}} </h2>
+	<h4 class="is-size-4 has-text-centered has-text-weight-light">{{week}}</h4>
+</div>
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-
-	<link rel="stylesheet" type="text/css" href="{% static 'css/stylesfortopten.css'%}">
-
-	<link rel="icon" href="{% static 'icons/music.ico' %}" type="image/gif" sizes="16x16">
-	
-	<title>billboard top 200</title>
-</head>
-<body>
-<header>
-		<div class="logo">
-			FiRE <i class="fas fa-cube"></i>
+{% for song in song_list%}
+<div class="list">
+	<div class="box item">
+		<div class="meta">
+			<h4 class="is-size-4 has-text-black">{{ forloop.counter }} {{song.name}}</h4>
+			<p class="artist p-3">{{ song.artist}} </p>
 		</div>
-		<nav >
-			<ul>
-				<li><a href="{% url 'home' %}">Home</a></li>
-				<li><a href="{% url 'youtube' %}">YouTube Downloder</a></li>
-				<li><a href="{% url 'about' %}">About</a></li>
-			</ul>
-		</nav>
-		<div class="menu-toggle">
-			<i class="fas fa-bars"></i>
-		</div>
-	</header>
-	<div id="saperator">.</div>
-
-
-	<h5 class="heading">{{list_name}}</h5>
-	<h2 class="week">{{week}}</h2>
-
-	{% for song in song_list%}
-		<div class="each" >
-			<h4 class="song">{{ song.2}}. {{song.0}}</h4>
-			<p class="artist">Artist:{{ song.1}} </p>
-			<div class="downloads">
-				<a  href=" {% url 'ytredirect' %}?query={{song.0}} {{ song.1}}"><i class="fab fa-youtube"></i> Watch</a>
-
-				
-				<a id="down" href="{% url 'download' %}?query={{song.0}} {{ song.1}}"><i class="fas fa-arrow-down"></i> Download</a>
+		<div class="mt-2 actions">
+			<div class="action">
+				<a class="button  is-danger btn-hover"
+					href=" {% url 'ytredirect' %}?query={{song.name}} {{ song.artist}}">
+					<span class="hover-value">Watch</span>
+					<span class="icon">
+						<i class="fab fa-youtube"></i>
+					</span>
+				</a>
+			</div>
+			<div class="action">
+				<a class="button  is-success btn-hover"
+					href="{% url 'download' %}?query={{song.name}} {{ song.artist}}">
+					<span class="hover-value"> Download </span>
+					<span class="icon">
+						<i class="fas fa-arrow-down"></i>
+					</span>
+				</a>
 			</div>
 		</div>
+	</div>
+</div>
 
-	{% endfor %}
-</body>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('.menu-toggle').click(function(){
-				$('nav').toggleClass('active')
-			})
-		})
-	</script>
-</html>
+{% endfor %}
+
+
+{% endblock content %}
+
+{% block css%}
+
+<style>
+	.list {
+		width: 75%;
+		margin: 10px auto;
+	}
+
+	.item {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.actions {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.action {
+		margin: 5px 0;
+		align-self: flex-end;
+	}
+
+
+	.hover-value {
+		font-size: 0px;
+		-webkit-transition: font-size 0.4s;
+		transition: font-size 0.4s;
+	}
+
+
+	.btn-hover:hover .hover-value {
+		font-size: inherit;
+	}
+
+	.btn-hover::before {
+		font-family: "Font Awesome 5 Free";
+		content: "\f053";
+		display: inline-block;
+		padding-right: 3px;
+		vertical-align: middle;
+		font-weight: 900;
+		font-size: 10px;
+	}
+
+	@media screen and (max-width: 769px),
+	print {
+		.list {
+			width: 95%;
+			margin: 10px auto;
+		}
+
+		.item {
+			flex-direction: column;
+		}
+
+		.actions {
+			flex-direction: row;
+			justify-content: space-evenly;
+			flex-wrap: wrap;
+		}
+
+		.action {
+			margin-right: 5px;
+		}
+
+		.hover-value {
+			font-size: inherit;
+			-webkit-transition: font-size 0.4s;
+			transition: font-size 0.4s;
+		}
+
+		.btn-hover::before {
+			content: ""
+		}
+	}
+</style>
+{% endblock css %}
