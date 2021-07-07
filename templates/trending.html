@@ -5,41 +5,53 @@
 {% block content %}
 
 <div class="info m-4">
-	<h2 class="is-size-2 has-text-centered is-family-primary is-primary has-text-link"> {{list_name}} </h2>
+	<h2 class="is-size-2 has-text-centered is-family-primary is-primary has-text-link"> {{local_list_name}} </h2>
 	<h4 class="is-size-4 has-text-centered has-text-weight-light">{{week}}</h4>
 </div>
 
-{% for song in song_list%}
+{% for movie in local_list %}
 <div class="list">
 	<div class="box item">
 		<div class="meta">
 			<h4 class="is-size-4 has-text-black"><span class="has-text-primary">#{{ forloop.counter }}</span>
-				{{song.name}}</h4>
-			<p class="artist p-3">{{ song.artist}} </p>
+				{{movie.title}}</h4>
 		</div>
 		<div class="mt-2 actions">
 			<div class="action">
-				<a class="button  is-danger btn-hover"
-					href=" {% url 'ytredirect' %}?query={{song.name}} {{ song.artist}}">
-					<span class="hover-value">Watch</span>
+				<a class="button  is-danger btn-hover" href=" {% url 'ytredirect' %}?query={{movie.title}}">
+					<span class="hover-value">Watch Trailer</span>
 					<span class="icon">
 						<i class="fab fa-youtube"></i>
-					</span>
-				</a>
-			</div>
-			<div class="action">
-				<a class="button  is-success btn-hover"
-					href="{% url 'download_from_name' %}?query={{song.name}} {{ song.artist}}">
-					<span class="hover-value"> Download </span>
-					<span class="icon">
-						<i class="fas fa-arrow-down"></i>
 					</span>
 				</a>
 			</div>
 		</div>
 	</div>
 </div>
-
+{% endfor %}
+<div class="info m-4">
+	<h2 class="is-size-2 has-text-centered is-family-primary is-primary has-text-link"> {{global_list_name}} </h2>
+</div>
+{% for movie in global_list %}
+<div class="list">
+	<div class="box item">
+		<div class="meta">
+			<h4 class="is-size-4 has-text-black"><span class="has-text-primary">#{{ forloop.counter }}</span>
+				{{movie.title}}
+			</h4>
+		</div>
+		<div class="mt-2 actions">
+			<div class="action">
+				<a class="button  is-danger btn-hover" href=" {% url 'ytredirect' %}?query={{movie.title}}">
+					<span class="hover-value">Watch Trailer</span>
+					<span class="icon">
+						<i class="fab fa-youtube"></i>
+					</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
 {% endfor %}
 
 
@@ -103,7 +115,7 @@
 
 		.actions {
 			flex-direction: row;
-			justify-content: space-evenly;
+			justify-content: flex-start;
 			flex-wrap: wrap;
 		}
 

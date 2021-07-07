@@ -5,6 +5,7 @@
 
 {% block content %}
 <div class="mt-4"></div>
+
 <div class="columns">
   <div class="column">
     {% url 'movies' as temp_link %}
@@ -13,35 +14,40 @@
   </div>
 
   <div class="column">
-    {% url 'kannadatopfifty' as temp_link %}
-    {% static 'images/kan' as temp_src %}
-    {% include "_card.html" with key="2" title="Weekly Top 50 Songs (Kannada)" desc="listen/watch kannada weekly top 50 Songs" link=temp_link  src=temp_src %}
+    {% url 'youtube' as temp_link %}
+    {% static 'images/ytt' as temp_src %}
+    {% include "_card.html" with key="2" title="Youtube Downloader" desc="Download youtube vidoes video/audio" link=temp_link   src=temp_src %}
   </div>
 
   <div class="column">
-    {% url 'hinditopfifty' as temp_link %}
-    {% static 'images/hin' as temp_src %}
-    {% include "_card.html" with key="3" title="Weekly Top 50 Songs (Hindi)" desc="listen/watch Hindi weekly top 50 Songs" link=temp_link   src=temp_src %}
+    {% url 'toptwohundred' as temp_link %}
+    {% static 'images/b200' as temp_src %}
+    {% include "_card.html" with key="3" title="Billboard TOP200" desc="listen/watch Billboard TOP200 (weekly)" link=temp_link  src=temp_src %}
   </div>
+
 </div>
 
 <div class="columns">
+
   <div class="column">
     {% url 'hothundred' as temp_link %}
     {% static 'images/b100' as temp_src %}
     {% include "_card.html" with key="4" title="Billboard HOT100" desc="listen/watch Billboard HOT100 (weekly)" link=temp_link  src=temp_src %}
   </div>
+
   <div class="column">
-    {% url 'toptwohundred' as temp_link %}
-    {% static 'images/b200' as temp_src %}
-    {% include "_card.html" with key="5" title="Billboard TOP200" desc="listen/watch Billboard TOP200 (weekly)" link=temp_link  src=temp_src %}
+    {% url 'kannadatopfifty' as temp_link %}
+    {% static 'images/kan' as temp_src %}
+    {% include "_card.html" with key="5" title="Weekly Top 50 Songs (Kannada)" desc="listen/watch kannada weekly top 50 Songs" link=temp_link  src=temp_src %}
   </div>
 
   <div class="column">
-    {% url 'youtube' as temp_link %}
-    {% static 'images/ytt' as temp_src %}
-    {% include "_card.html" with key="6" title="Youtube Downloader" desc="Download youtube vidoes video/audio" link=temp_link   src=temp_src %}
+    {% url 'hinditopfifty' as temp_link %}
+    {% static 'images/hin' as temp_src %}
+    {% include "_card.html" with key="6" title="Weekly Top 50 Songs (Hindi)" desc="listen/watch Hindi weekly top 50 Songs" link=temp_link   src=temp_src %}
   </div>
+
+
 
 </div>
 
